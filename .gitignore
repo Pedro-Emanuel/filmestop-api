@@ -1,14 +1,47 @@
+# Ambiente virtual
 venv/
+venv_py311/
 *.pyc
 __pycache__/
-instance/
-.pytest_cache/
-.coverage
-htmlcov/
-dist/
-build/
-*.egg-info/
+
+# Arquivos de configuração
+*.ini
+.env
+
+# Logs
+*.log
+
+# Arquivos de banco de dados
+*.sqlite
+
+# Arquivos do Alembic
+alembic/
+alembic.ini
+
+# Arquivos específicos do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de IDE
+.vscode/
 .idea/
 *.swp
-*~
-*.env
+
+# Arquivos de cache do Python
+*.pyc
+*.pyo
+*.pyd
+
+# Diretórios de build
+build/
+dist/
+*.egg-info/
+
+# Arquivos temporários
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+# Outros
+*.so
