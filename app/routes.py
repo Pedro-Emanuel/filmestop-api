@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# from flask import Blueprint, app, jsonify, request
-from flask import Blueprint, abort, jsonify, request, make_response
+from flask import Blueprint, abort, jsonify, request
 from app import db
 from app.models import User, Movie, Rental
 from marshmallow import Schema, fields, validate, ValidationError
