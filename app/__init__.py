@@ -19,7 +19,8 @@ def create_app(config_name='default'):
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
     else:
         # Suas configurações normais aqui
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+        DATABASE_URL = 'postgresql://' + os.getenv('DB_USER') + ':' + os.getenv('DB_PASS') + '@' + os.getenv('DB_HOST') + '/' + os.getenv('DB_NAME')
+        app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['JSON_AS_ASCII'] = False
