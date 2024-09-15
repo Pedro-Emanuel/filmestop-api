@@ -1,6 +1,6 @@
 # FilmesTop API
 
-![FilmesTop Logo](logo.png) 
+![FilmesTop Logo](logo.png)
 
 ## Índice
 
@@ -10,9 +10,6 @@
 - [Instalação e Configuração](#instalação-e-configuração)
 - [Uso da API](#uso-da-api)
 - [Desenvolvimento](#desenvolvimento)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
-- [Contato](#contato)
 
 ## Descrição
 
