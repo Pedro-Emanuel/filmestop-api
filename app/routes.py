@@ -219,18 +219,58 @@ def populate_db():
     clear_database()
     
     # Adicionar usuários
-    user1 = add_user("João Silva", "joao@email.com", "123456789")
-    user2 = add_user("Maria Oliveira", "maria@email.com", "987654321")
-    user3 = add_user("José Santos", "jose@email.com", "456789123")
-    user4 = add_user("Ana Souza", "ana@email.com", "654321987")
-    user5 = add_user("Carlos Pereira", "carlos@email.com", "321654987")
-        
+    users = [
+        ("João Silva", "joao@email.com", "123456789"),
+        ("Maria Oliveira", "maria@email.com", "987654321"),
+        ("José Santos", "jose@email.com", "456789123"),
+        ("Ana Souza", "ana@email.com", "654321987"),
+        ("Carlos Pereira", "carlos@email.com", "321654987"),
+        ("Lucas Almeida", "lucas@email.com", "159753486"),
+        ("Fernanda Lima", "fernanda@email.com", "357951468"),
+        ("Gabriel Costa", "gabriel@email.com", "741258963"),
+        ("Juliana Rocha", "juliana@email.com", "852963741"),
+        ("Roberto Mendes", "roberto@email.com", "963852741"),
+        ("Patricia Martins", "patricia@email.com", "147258369"),
+        ("Thiago Oliveira", "thiago@email.com", "258963147"),
+        ("Julio Cesar", "julio@email.com", "369147258"),
+        ("Vanessa Pereira", "vanessa@email.com", "741369852"),
+        ("Ricardo Santos", "ricardo@email.com", "852741963"),
+        ("Camila Barbosa", "camila@email.com", "963741258"),
+        ("Eduardo Lima", "eduardo@email.com", "258147963"),
+        ("Larissa Silva", "larissa@email.com", "147963258"),
+        ("Marcos Paulo", "marcos@email.com", "369258147"),
+        ("Gabriela Souza", "gabriela@email.com", "741852963")
+    ]
+    
+    for name, email, phone in users:
+        add_user(name, email, phone)
+    
     # Adicionar filmes
-    movie1 = add_movie("O Poderoso Chefão", "Drama", 1972, "A história da família Corleone", "Francis Ford Coppola")
-    movie2 = add_movie("Matrix", "Ficção Científica", 1999, "Um hacker descobre a verdade sobre sua realidade", "Lana e Lilly Wachowski")
-    movie3 = add_movie("Titanic", "Romance", 1997, "O amor impossível entre Jack e Rose", "James Cameron")
-    movie4 = add_movie("Os Caça-Fantasmas", "Comédia", 1984, "Uma equipe de caça-fantasmas salva Nova York de fantasmas", "Ivan Reitman")
-    movie5 = add_movie("Pulp Fiction", "Crime", 1994, "Várias histórias se entrelaçam em Los Angeles", "Quentin Tarantino")
+    movies = [
+        ("O Poderoso Chefão", "Drama", 1972, "A história da família Corleone", "Francis Ford Coppola"),
+        ("Matrix", "Ficção Científica", 1999, "Um hacker descobre a verdade sobre sua realidade", "Lana e Lilly Wachowski"),
+        ("Titanic", "Romance", 1997, "O amor impossível entre Jack e Rose", "James Cameron"),
+        ("Os Caça-Fantasmas", "Comédia", 1984, "Uma equipe de caça-fantasmas salva Nova York de fantasmas", "Ivan Reitman"),
+        ("Pulp Fiction", "Crime", 1994, "Várias histórias se entrelaçam em Los Angeles", "Quentin Tarantino"),
+        ("O Senhor dos Anéis: A Sociedade do Anel", "Fantasia", 2001, "A jornada para destruir o Anel do Poder", "Peter Jackson"),
+        ("Star Wars: Episódio IV - Uma Nova Esperança", "Aventura", 1977, "A luta contra o Império Galáctico", "George Lucas"),
+        ("O Silêncio dos Inocentes", "Suspense", 1991, "A caçada a um serial killer com a ajuda de um psicopata encarcerado", "Jonathan Demme"),
+        ("Clube da Luta", "Drama", 1999, "Um homem desencadeia uma revolução interna com um clube secreto", "David Fincher"),
+        ("Gladiador", "Ação", 2000, "Um general romano busca vingança contra o imperador que matou sua família", "Ridley Scott"),
+        ("A Origem", "Ficção Científica", 2010, "Um ladrão especializado em extrair segredos do subconsciente", "Christopher Nolan"),
+        ("Forrest Gump", "Drama", 1994, "A vida extraordinária de um homem com QI baixo", "Robert Zemeckis"),
+        ("O Grande Lebowski", "Comédia", 1998, "Um homem é confundido com um milionário e se envolve em uma trama complicada", "Joel e Ethan Coen"),
+        ("Avatar", "Ficção Científica", 2009, "Um ex-fuzileiro naval se torna um avatar em um planeta alienígena", "James Cameron"),
+        ("Cidadão Kane", "Drama", 1941, "A vida do magnata de mídia Charles Foster Kane", "Orson Welles"),
+        ("Casablanca", "Romance", 1942, "Um café em Casablanca durante a Segunda Guerra Mundial", "Michael Curtiz"),
+        ("O Exorcista", "Terror", 1973, "A luta contra a possessão demoníaca de uma jovem", "William Friedkin"),
+        ("O Labirinto do Fauno", "Fantasia", 2006, "Uma menina encontra um mundo mágico durante a Guerra Civil Espanhola", "Guillermo del Toro"),
+        ("O Rei Leão", "Animação", 1994, "A história de um jovem leão que deve reclamar seu reino", "Roger Allers e Rob Minkoff"),
+        ("O Poderoso Chefão II", "Drama", 1974, "Continuação da saga da família Corleone", "Francis Ford Coppola")
+    ]
+    
+    for title, genre, year, synopsis, director in movies:
+        add_movie(title, genre, year, synopsis, director)
     
     return jsonify({'message': 'Banco de dados populado com dados de exemplo'}), HTTPStatus.OK
 
