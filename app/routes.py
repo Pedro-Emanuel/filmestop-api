@@ -40,24 +40,13 @@ def handle_generic_error(error):
 def handle_not_found(error):
     return jsonify({"erro": ERRO_NAO_ENCONTRADO}), HTTPStatus.NOT_FOUND
 
-# Decorador para definir a codificação UTF-8 nas respostas
-def utf8_response(f):
-    @wraps(f)
-    def wrapped(*args, **kwargs):
-        resp = make_response(f(*args, **kwargs))
-        resp.headers['Content-Type'] = 'application/json; charset=utf-8'
-        return resp
-    return wrapped
-
 # Rota raiz
 @bp.route('/')
-@utf8_response
 def index():
     return jsonify({'mensagem': 'API de locadora de filmes'}), HTTPStatus.OK
 
 # Rota para alugar um filme
 @bp.route('/rent', methods=['POST'])
-@utf8_response
 def rent_movie():
     data = RentMovieSchema().load(request.json)
     user = User.query.get(data['user_id'])
@@ -74,7 +63,6 @@ def rent_movie():
 
 # Rota para avaliar um filme
 @bp.route('/rate', methods=['POST'])
-@utf8_response
 def rate_movie():
     data = RateMovieSchema().load(request.json)
     rental = Rental.query.filter_by(user_id=data['user_id'], movie_id=data['movie_id']) \
@@ -90,7 +78,6 @@ def rate_movie():
 
 # Rota para listar todos os filmes
 @bp.route('/movies')
-@utf8_response
 def list_movies():
     movies = Movie.query.all()
     return jsonify([
@@ -135,7 +122,6 @@ def get_movies_by_genre():
 
 # Rota para obter detalhes de um filme específico
 @bp.route('/movies/<int:movie_id>')
-@utf8_response
 def get_movie_details(movie_id):
     movie = Movie.query.get_or_404(movie_id)
     return jsonify({
@@ -149,7 +135,6 @@ def get_movie_details(movie_id):
 
 # Rota para listar todos os aluguéis de um usuário específico
 @bp.route('/users/<int:user_id>/rentals')
-@utf8_response
 def list_user_rentals(user_id):
     user = User.query.get_or_404(user_id)
     rentals = Rental.query.filter_by(user_id=user_id).order_by(Rental.rental_date.desc()).all()
@@ -163,7 +148,6 @@ def list_user_rentals(user_id):
     ]), HTTPStatus.OK
 
 @bp.route('/test_db')
-@utf8_response
 def test_db():
     try:
         result = db.session.execute(text("SELECT 1"))
@@ -206,7 +190,6 @@ def clear_database():
     db.session.commit()
     
 @bp.route('/add_user', methods=['POST'])
-@utf8_response
 @admin_required
 def create_user():
     data = request.json
@@ -214,7 +197,6 @@ def create_user():
     return jsonify({'message': 'Usuário adicionado com sucesso', 'id': user.id}), HTTPStatus.CREATED
 
 @bp.route('/add_movie', methods=['POST'])
-@utf8_response
 @admin_required
 def create_movie():
     data = request.json
@@ -222,14 +204,12 @@ def create_movie():
     return jsonify({'message': 'Filme adicionado com sucesso', 'id': movie.id}), HTTPStatus.CREATED
 
 @bp.route('/clear_database', methods=['POST'])
-@utf8_response
 @admin_required
 def clear_db():
     clear_database()
     return jsonify({'message': 'Banco de dados limpo com sucesso'}), HTTPStatus.OK
 
 @bp.route('/populate_database', methods=['POST'])
-@utf8_response
 @admin_required
 def populate_db():
     clear_database()
@@ -251,7 +231,6 @@ def populate_db():
     return jsonify({'message': 'Banco de dados populado com dados de exemplo'}), HTTPStatus.OK
 
 @bp.route('/create_admin', methods=['POST'])
-@utf8_response
 def create_admin():
     data = request.json
     user = User.query.filter_by(email=data['email']).first()
