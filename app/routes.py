@@ -8,6 +8,7 @@ from marshmallow import Schema, fields, validate, ValidationError
 from http import HTTPStatus
 from functools import wraps
 from sqlalchemy import func, text
+from urllib.parse import unquote
 
 bp = Blueprint('main', __name__)
 
@@ -103,9 +104,8 @@ def list_movies():
     
 # Rota para listar filmes por gênero (com paginação, case insensitive e busca parcial)
 @bp.route('/movies/genre')
-@utf8_response
 def get_movies_by_genre():
-    genre = request.args.get('genre', '').strip()
+    genre = unquote(request.args.get('genre', '').strip())
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
 
