@@ -11,7 +11,7 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
     admin_token = db.Column(db.String(64), unique=True)
-    rentals = db.relationship('Rental', backref='user', lazy=True)
+    rentals = db.relationship('Rental', backref='user', cascade='all, delete-orphan', lazy=True)
 
     def generate_admin_token(self):
         self.admin_token = secrets.token_hex(32)
@@ -25,7 +25,7 @@ class Movie(db.Model):
     year = db.Column(db.Integer, nullable=False)
     synopsis = db.Column(db.Text)
     director = db.Column(db.String(100))
-    rentals = db.relationship('Rental', backref='movie', lazy=True)
+    rentals = db.relationship('Rental', backref='movie', cascade='all, delete-orphan', lazy=True)
 
 class Rental(db.Model):
     id = db.Column(db.Integer, primary_key=True)
