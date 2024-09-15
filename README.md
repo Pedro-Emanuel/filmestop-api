@@ -1,29 +1,47 @@
 # FilmesTop API
 
+![FilmesTop Logo](logo.png) 
+
+## Índice
+
+- [Descrição](#descrição)
+- [Funcionalidades](#funcionalidades)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Instalação e Configuração](#instalação-e-configuração)
+- [Uso da API](#uso-da-api)
+- [Desenvolvimento](#desenvolvimento)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
+- [Contato](#contato)
+
 ## Descrição
 
-FilmesTop API é um serviço backend desenvolvido para gerenciar um sistema de aluguel de filmes online. Esta API permite que os usuários naveguem por um catálogo de filmes, aluguem títulos, avaliem filmes assistidos e gerenciem suas locações.
+FilmesTop API é um serviço backend robusto desenvolvido para gerenciar um sistema de aluguel de filmes online. Esta API permite que os usuários explorem um vasto catálogo de filmes, realizem aluguéis, avaliem os títulos assistidos e gerenciem seu histórico de locações.
 
 ## Funcionalidades
 
-- Listagem de filmes disponíveis por gênero
-- Detalhamento de informações sobre filmes específicos
-- Sistema de aluguel de filmes
-- Avaliação de filmes alugados
-- Visualização do histórico de aluguéis dos usuários
+- 🎬 Listagem de filmes disponíveis por gênero
+- 📊 Detalhamento completo de informações sobre filmes específicos
+- 🛒 Sistema de aluguel de filmes
+- ⭐ Avaliação personalizada de filmes alugados
+- 📅 Visualização detalhada do histórico de aluguéis dos usuários
 
 ## Tecnologias Utilizadas
 
-- Python 3.11
-- Flask (Framework web)
-- SQLAlchemy (ORM)
-- PostgreSQL (Banco de dados)
-- Marshmallow (Serialização/Desserialização)
-- Alembic (Migrações de banco de dados)
+| Tecnologia | Versão | Descrição |
+|------------|--------|-----------|
+| Python | 3.11 | Linguagem de programação principal |
+| Flask | 2.0.1 | Framework web para construção da API |
+| SQLAlchemy | 1.4.x | ORM para interação com o banco de dados |
+| PostgreSQL | 13.x | Sistema de gerenciamento de banco de dados |
+| Marshmallow | 3.14.x | Biblioteca para serialização/desserialização |
+| Alembic | 1.7.x | Ferramenta para migrações de banco de dados |
 
 ## Instalação e Configuração
 
 ### Pré-requisitos
+
+Antes de começar, certifique-se de ter instalado:
 
 - Python 3.11
 - PostgreSQL
@@ -31,113 +49,124 @@ FilmesTop API é um serviço backend desenvolvido para gerenciar um sistema de a
 
 ### Passos de Instalação
 
-1. Clone o repositório:
+1. **Clone o repositório:**
 
-    ```bash
-    git clone https://github.com/Pedro-Emanuel/filmestop-api.git
-    cd filmestop-api
-    ```
+   ```bash
+   git clone https://github.com/Pedro-Emanuel/filmestop-api.git
+   cd filmestop-api
+   ```
 
-2. Crie e ative um ambiente virtual:
+2. **Crie e ative um ambiente virtual:**
 
-    ```bash
-    python3.11 -m venv venv_py311
-    source venv_py311/bin/activate  # No Windows use: venv_py311\Scripts\activate
-    ```
+   ```bash
+   python3.11 -m venv venv_py311
+   source venv_py311/bin/activate  # No Windows use: venv_py311\Scripts\activate
+   ```
 
-3. Instale as dependências do projeto:
+3. **Instale as dependências do projeto:**
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4. Configure as variáveis de ambiente:
+4. **Configure as variáveis de ambiente:**
 
-    Crie um arquivo `.env` na raiz do projeto e adicione:
+   Crie um arquivo `.env` na raiz do projeto e adicione:
 
-    ```bash
-    DB_USER=seu_usuario
-    DB_PASS=sua_senha
-    DB_NAME=filmestop_db
-    DB_HOST=localhost
-    ```
+   ```env
+   DB_USER=seu_usuario
+   DB_PASS=sua_senha
+   DB_NAME=filmestop_db
+   DB_HOST=localhost
+   ```
 
-5. Inicialize o banco de dados:
+5. **Inicialize o banco de dados:**
 
-    ```bash
-    flask db upgrade
-    ```
+   ```bash
+   flask db upgrade
+   ```
 
-6. Execute o servidor de desenvolvimento:
+6. **Execute o servidor de desenvolvimento:**
 
-    ```bash
-    python run.py
-    ```
+   ```bash
+   python run.py
+   ```
 
 ## Uso da API
 
 ### Endpoints Principais
 
-- `GET /movies`: Lista todos os filmes
-- `GET /movies/genre?genre=<genero>`: Lista filmes por gênero
-- `GET /movies/<id>`: Obtém detalhes de um filme específico
-- `POST /rent`: Aluga um filme
-- `POST /rate`: Avalia um filme alugado
-- `GET /users/<id>/rentals`: Lista aluguéis de um usuário
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| GET | `/movies` | Lista todos os filmes |
+| GET | `/movies/genre?genre=<genero>` | Lista filmes por gênero |
+| GET | `/movies/<id>` | Obtém detalhes de um filme específico |
+| POST | `/rent` | Aluga um filme |
+| POST | `/rate` | Avalia um filme alugado |
+| GET | `/users/<id>/rentals` | Lista aluguéis de um usuário |
 
-### Exemplo de Requisição
+### Exemplos de Requisições
 
-Listar todos os filmes:
+#### Listar todos os filmes
 
 ```bash
-@route GET /movies
-curl http://localhost:5000/movies
+curl -X GET http://localhost:5000/movies
 ```
 
-Listar filmes por gênero:
+#### Listar filmes por gênero
 
 ```bash
-@route GET /movies/genre?genre=<genero>
-curl http://localhost:5000/movies/genre?genre=comédia
-curl http://localhost:5000/movies/genre?genre=comédia&page=1&per_page=10
+curl -X GET "http://localhost:5000/movies/genre?genre=com%C3%A9dia"
 ```
 
-`
-page e per_page são opcionais (default: page=1, per_page=10)
-`
+> ⚠️ **Importante:** Ao pesquisar gêneros ou títulos com caracteres especiais (como acentos), use a codificação URL apropriada.
 
-Detalhar informações de um filme:
+**Exemplos de codificação:**
+
+| Palavra   | Codificação URL    |
+|-----------|--------------------|
+| comédia   | `com%C3%A9dia`     |
+| ficção    | `fic%C3%A7%C3%A3o` |
+
+💡 **Dica:** Você pode usar [ferramentas online de codificação URL](https://www.urlencoder.org/) ou funções específicas em sua linguagem de programação para gerar a string codificada corretamente.
+
+**Parâmetros opcionais:**
+
+- `page`: Número da página (padrão: 1)
+- `per_page`: Número de itens por página (padrão: 10)
+
+**Exemplo com paginação:**
 
 ```bash
-@route GET /movies/<movie_id>
-curl http://localhost:5000/movies/1
+curl -X GET "http://localhost:5000/movies/genre?genre=com%C3%A9dia&page=1&per_page=5"
 ```
 
-Alugar um filme:
+#### Detalhar informações de um filme
 
 ```bash
-@route POST /rent
-@body {user_id: int, movie_id: int}
+curl -X GET http://localhost:5000/movies/6
+```
+
+#### Alugar um filme
+
+```bash
 curl -X POST http://localhost:5000/rent \
- -H "Content-Type: application/json" \
- -d '{"user_id": 10, "movie_id": 6}'
+     -H "Content-Type: application/json" \
+     -d '{"user_id": 10, "movie_id": 6}'
 ```
 
-Avaliar um filme alugado:
+#### Avaliar um filme alugado
 
 ```bash
-@route POST /rate
-@body {user_id: int, movie_id: int, rating: float}
 curl -X POST http://localhost:5000/rate \
- -H "Content-Type: application/json" \
- -d '{"user_id": 10, "movie_id": 6, "rating": 4.5}'
+     -H "Content-Type: application/json" \
+     -d '{"user_id": 10, "movie_id": 6, "rating": 4.5}'
 ```
 
-Listar aluguéis de um usuário:
+#### Listar aluguéis de um usuário
 
 ```bash
-@route GET /users/<user_id>/rentals
-curl http://localhost:5000/users/10/rentals
+curl -X GET http://localhost:5000/users/10/rentals
 ```
 
 ## Desenvolvimento
@@ -146,11 +175,11 @@ curl http://localhost:5000/users/10/rentals
 
 A estrutura do projeto segue o seguinte padrão:
 
-``` bash
-    filmestop-api/
+```plaintext
+filmestop-api/
 │
 ├── app/
-│   ├── init.py
+│   ├── __init__.py
 │   ├── models.py
 │   └── routes.py
 │
@@ -164,3 +193,20 @@ A estrutura do projeto segue o seguinte padrão:
 ├── run.py
 └── README.md
 ```
+
+<!-- ### Executando Testes
+
+Para executar os testes unitários:
+
+```bash
+python -m pytest tests/
+``` -->
+
+<!-- ### Adicionando Novas Migrações
+
+Para criar e aplicar novas migrações de banco de dados:
+
+```bash
+flask db migrate -m "Descrição da migração"
+flask db upgrade
+``` -->
