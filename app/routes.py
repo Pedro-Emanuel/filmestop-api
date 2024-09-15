@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # from flask import Blueprint, app, jsonify, request
-from flask import Blueprint, jsonify, request, make_response
+from flask import Blueprint, abort, jsonify, request, make_response
 from app import db
 from app.models import User, Movie, Rental
 from marshmallow import Schema, fields, validate, ValidationError
@@ -49,8 +49,8 @@ def index():
 @bp.route('/rent', methods=['POST'])
 def rent_movie():
     data = RentMovieSchema().load(request.json)
-    user = User.query.get(data['user_id'])
-    movie = Movie.query.get(data['movie_id'])
+    user = db.session.get(User, data['user_id'])
+    movie = db.session.get(Movie, data['movie_id'])
     
     if not user or not movie:
         return jsonify({'erro': 'Usuário ou Filme não encontrado'}), HTTPStatus.NOT_FOUND
@@ -123,7 +123,9 @@ def get_movies_by_genre():
 # Rota para obter detalhes de um filme específico
 @bp.route('/movies/<int:movie_id>')
 def get_movie_details(movie_id):
-    movie = Movie.query.get_or_404(movie_id)
+    movie = db.session.get(Movie, movie_id)
+    if movie is None:
+        abort(HTTPStatus.NOT_FOUND)
     return jsonify({
         'id': movie.id,
         'titulo': movie.title,
@@ -136,7 +138,9 @@ def get_movie_details(movie_id):
 # Rota para listar todos os aluguéis de um usuário específico
 @bp.route('/users/<int:user_id>/rentals')
 def list_user_rentals(user_id):
-    user = User.query.get_or_404(user_id)
+    user = db.session.get(User, user_id)
+    if user is None:
+        abort(HTTPStatus.NOT_FOUND)
     rentals = Rental.query.filter_by(user_id=user_id).order_by(Rental.rental_date.desc()).all()
     return jsonify([
         {
