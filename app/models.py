@@ -26,6 +26,8 @@ class Movie(db.Model):
     synopsis = db.Column(db.Text)
     director = db.Column(db.String(100))
     rentals = db.relationship('Rental', backref='movie', cascade='all, delete-orphan', lazy=True)
+    total_ratings = db.Column(db.Integer, nullable=True)
+    final_grade = db.Column(db.Float, nullable=True)
 
 class Rental(db.Model):
     id = db.Column(db.Integer, primary_key=True)
