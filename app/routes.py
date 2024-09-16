@@ -198,6 +198,22 @@ def test_db():
     except Exception as e:
         return ResponseFactory.create_response({'error': str(e)}, 500)
     
+@bp.route('/users', methods=['GET'])
+@admin_required
+def list_users():
+    """
+    Rota para listar todos os usuários (apenas para admins).
+    """
+    users = User.query.all()
+    return ResponseFactory.create_response([
+        {
+            'id': u.id,
+            'nome': u.name,
+            'email': u.email,
+            'telefone': u.phone
+        } for u in users
+    ], HTTPStatus.OK)    
+
 @bp.route('/add_user', methods=['POST'])
 @admin_required
 def create_user():
