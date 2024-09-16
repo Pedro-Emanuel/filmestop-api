@@ -10,6 +10,8 @@
 - [Instalação e Configuração](#instalação-e-configuração)
 - [Uso da API](#uso-da-api)
 - [Desenvolvimento](#desenvolvimento)
+- [Testes](#testes)
+- [Migrações de Banco de Dados](#migrações-de-banco-de-dados)
 
 ## Descrição
 
@@ -28,11 +30,11 @@ FilmesTop API é um serviço backend robusto desenvolvido para gerenciar um sist
 | Tecnologia | Versão | Descrição |
 |------------|--------|-----------|
 | Python | 3.11 | Linguagem de programação principal |
-| Flask | 2.0.1 | Framework web para construção da API |
-| SQLAlchemy | 1.4.x | ORM para interação com o banco de dados |
+| Flask | 3.0.3 | Framework web para construção da API |
+| SQLAlchemy | 2.0.34 | ORM para interação com o banco de dados |
 | PostgreSQL | 13.x | Sistema de gerenciamento de banco de dados |
-| Marshmallow | 3.14.x | Biblioteca para serialização/desserialização |
-| Alembic | 1.7.x | Ferramenta para migrações de banco de dados |
+| Marshmallow | 3.19.0 | Biblioteca para serialização/desserialização |
+| Alembic | 1.13.2 | Ferramenta para migrações de banco de dados |
 
 ## Instalação e Configuração
 
@@ -41,7 +43,7 @@ FilmesTop API é um serviço backend robusto desenvolvido para gerenciar um sist
 Antes de começar, certifique-se de ter instalado:
 
 - Python 3.11
-- PostgreSQL
+- PostgreSQL 13.x
 - pip (gerenciador de pacotes do Python)
 
 ### Passos de Instalação
@@ -178,11 +180,24 @@ filmestop-api/
 ├── app/
 │   ├── __init__.py
 │   ├── models.py
-│   └── routes.py
+│   ├── routes.py
+│   ├── schemas.py
+│   └── utils.py
 │
 ├── migrations/
+│   ├── versions/
+│   │   ├── 2ee9952e7b50_init.py
+│   │   └── 55fbe96430b8_adding_final_grade_and_total_ratings_to_.py
+│   ├── alembic.ini
+│   ├── env.py
+│   ├── README
+│   └── script.py.mako
 │
 ├── tests/
+│   ├── conftest.py
+│   ├── __init__.py
+│   ├── test_models.py
+│   └── test_routes.py
 │
 ├── .env
 ├── .gitignore
@@ -191,19 +206,56 @@ filmestop-api/
 └── README.md
 ```
 
-<!-- ### Executando Testes
+## Testes
 
 Para executar os testes unitários:
 
 ```bash
 python -m pytest tests/
-``` -->
+```
 
-<!-- ### Adicionando Novas Migrações
+Os testes estão organizados nos seguintes arquivos:
 
-Para criar e aplicar novas migrações de banco de dados:
+- `test_models.py`: Testes para os modelos de dados
+- `test_routes.py`: Testes para as rotas da API
+
+## Migrações de Banco de Dados
+
+As migrações do banco de dados são gerenciadas usando Alembic através do Flask-Migrate.
+
+### Criando uma nova migração
+
+Para criar uma nova migração após fazer alterações nos modelos:
 
 ```bash
 flask db migrate -m "Descrição da migração"
+```
+
+### Aplicando migrações
+
+Para aplicar as migrações pendentes ao banco de dados:
+
+```bash
 flask db upgrade
-``` -->
+```
+
+### Revertendo migrações
+
+Para reverter a última migração aplicada:
+
+```bash
+flask db downgrade
+```
+
+### Histórico de migrações
+
+As migrações existentes podem ser encontradas no diretório `migrations/versions/`. Atualmente, temos as seguintes migrações:
+
+1. `2ee9952e7b50_init.py`: Migração inicial
+2. `55fbe96430b8_adding_final_grade_and_total_ratings_to_.py`: Adição de nota final e total de avaliações à tabela de filmes
+
+Para ver o histórico completo de migrações:
+
+```bash
+flask db history
+```
