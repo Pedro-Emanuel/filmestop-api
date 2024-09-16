@@ -76,7 +76,8 @@ Antes de começar, certifique-se de ter instalado:
    DB_USER=seu_usuario
    DB_PASS=sua_senha
    DB_NAME=filmestop_db
-   DB_HOST=localhost
+   DB_HOST=localhost # Local
+   # DB_HOST=db # Docker
    ```
 
 5. **Inicialize o banco de dados:**
