@@ -18,6 +18,12 @@ __pycache__/
 alembic/
 alembic.ini
 
+# Arquivos de migração do Alembic
+migrations/__pycache__/
+migrations/*.pyc
+migrations/versions/__pycache__/
+migrations/versions/*.pyc
+
 # Arquivos específicos do sistema
 .DS_Store
 Thumbs.db
