@@ -15,7 +15,9 @@
 
 ## Descrição
 
-FilmesTop API é um serviço backend robusto desenvolvido para gerenciar um sistema de aluguel de filmes online. Esta API permite que os usuários explorem um vasto catálogo de filmes, realizem aluguéis, avaliem os títulos assistidos e gerenciem seu histórico de locações.
+Este repositório contém a implementação de um case de seleção para desenvolvedor backend. Não se trata de um projeto real, mas sim de um exercício prático para avaliar habilidades de programação. Não há intenção de uso em produção.
+
+FilmesTop API é um serviço backend desenvolvido para gerenciar um sistema de aluguel de filmes online. Esta API permite que os usuários explorem um vasto catálogo de filmes, realizem aluguéis, avaliem os títulos assistidos e gerenciem seu histórico de locações.
 
 ## Funcionalidades
 
