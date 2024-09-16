@@ -82,17 +82,65 @@ Antes de começar, certifique-se de ter instalado:
    # DB_HOST=db # Docker
    ```
 
-5. **Inicialize o banco de dados:**
+    **Nota de Segurança:** Este exemplo é fornecido apenas para fins educativos e de demonstração. Mantenha suas credenciais seguras e não as compartilhe publicamente.
+
+5. **Inicialize o postgres:**
+
+   Certifique-se de que o PostgreSQL está instalado e em execução. Se necessário, inicie o serviço:
+
+   ```bash
+   # No Linux (systemd):
+   sudo systemctl start postgresql
+
+   # No macOS:
+   brew services start postgresql
+
+   # No Windows:
+   # Inicie o serviço PostgreSQL através do Gerenciador de Serviços
+   ```
+
+   Configure o banco de dados e o usuário:
+
+   ```bash
+   sudo -u postgres psql
+
+   # Mesmo usuário e senha definidos no .env
+   # No prompt do PostgreSQL, execute:
+   CREATE DATABASE filmestop_db;
+   CREATE USER seu_usuario WITH PASSWORD 'sua_senha';
+   GRANT ALL PRIVILEGES ON DATABASE filmestop_db TO seu_usuario;
+   \c filmestop_db
+   GRANT ALL ON SCHEMA public TO seu_usuario;
+   ALTER SCHEMA public OWNER TO seu_usuario;
+   \q
+   ```
+
+6. **Inicialize o banco de dados:**
+
+   Abra um novo terminal, entre no ambiente virtual e execute as migrações do banco de dados:
 
    ```bash
    flask db upgrade
    ```
 
-6. **Execute o servidor de desenvolvimento:**
+7. **Execute o servidor de desenvolvimento:**
 
    ```bash
    python run.py
    ```
+
+8. **Popule o banco de dados:**
+
+   Para adicionar dados iniciais ao banco de dados, execute o script `populate_db.sh`:
+
+   ```bash
+   chmod +x populate_db.sh
+   ./populate_db.sh
+   ```
+
+   Este script adicionará alguns filmes e usuários ao banco de dados para testes.
+
+   Experimente olhar as rotas de admin no app/routes.py (apenas para testes).
 
 ## Uso da API
 
@@ -112,13 +160,13 @@ Antes de começar, certifique-se de ter instalado:
 #### Listar todos os filmes
 
 ```bash
-curl -X GET http://localhost:5000/movies
+curl -X GET http://localhost:5001/movies
 ```
 
 #### Listar filmes por gênero
 
 ```bash
-curl -X GET "http://localhost:5000/movies/genre?genre=com%C3%A9dia"
+curl -X GET "http://localhost:5001/movies/genre?genre=com%C3%A9dia"
 ```
 
 > ⚠️ **Importante:** Ao pesquisar gêneros ou títulos com caracteres especiais (como acentos), use a codificação URL apropriada.
@@ -140,19 +188,19 @@ curl -X GET "http://localhost:5000/movies/genre?genre=com%C3%A9dia"
 **Exemplo com paginação:**
 
 ```bash
-curl -X GET "http://localhost:5000/movies/genre?genre=com%C3%A9dia&page=1&per_page=5"
+curl -X GET "http://localhost:5001/movies/genre?genre=com%C3%A9dia&page=1&per_page=5"
 ```
 
 #### Detalhar informações de um filme
 
 ```bash
-curl -X GET http://localhost:5000/movies/6
+curl -X GET http://localhost:5001/movies/6
 ```
 
 #### Alugar um filme
 
 ```bash
-curl -X POST http://localhost:5000/rent \
+curl -X POST http://localhost:5001/rent \
      -H "Content-Type: application/json" \
      -d '{"user_id": 10, "movie_id": 6}'
 ```
@@ -160,7 +208,7 @@ curl -X POST http://localhost:5000/rent \
 #### Avaliar um filme alugado
 
 ```bash
-curl -X POST http://localhost:5000/rate \
+curl -X POST http://localhost:5001/rate \
      -H "Content-Type: application/json" \
      -d '{"user_id": 10, "movie_id": 6, "rating": 4.5}'
 ```
@@ -168,7 +216,7 @@ curl -X POST http://localhost:5000/rate \
 #### Listar aluguéis de um usuário
 
 ```bash
-curl -X GET http://localhost:5000/users/10/rentals
+curl -X GET http://localhost:5001/users/10/rentals
 ```
 
 ## Desenvolvimento
